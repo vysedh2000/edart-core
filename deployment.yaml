@@ -21,6 +21,13 @@ spec:
           env:
             - name: DATABASE_URL
               value: "${DB_URL}"
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "200m"
 ---
 apiVersion: v1
 kind: Service
