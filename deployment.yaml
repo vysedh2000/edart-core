@@ -20,7 +20,7 @@ spec:
             - containerPort: 8090
           env:
             - name: DATABASE_URL
-              value: postgres://root:123456@192.168.1.122:6544/root
+              value: "${DB_URL}"
 ---
 apiVersion: v1
 kind: Service
