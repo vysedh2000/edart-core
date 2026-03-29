@@ -14,13 +14,13 @@ spec:
     spec:
       containers:
         - name: edart-core
-          image: vviisydh/edart-core:1
+          image: vviisydh/edart-core:2
           imagePullPolicy: Always
           ports:
             - containerPort: 8090
           env:
             - name: DATABASE_URL
-              value: postgres://root:123456@194.163.139.209:5432/root
+              value: postgres://root:123456@192.168.1.122:6544/root
 ---
 apiVersion: v1
 kind: Service
