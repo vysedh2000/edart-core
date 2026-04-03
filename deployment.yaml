@@ -15,12 +15,12 @@ spec:
       containers:
         - name: edart-core
           image: vviisydh/edart-core:2
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8090
-          env:
-            - name: DATABASE_URL
-              value: "${DB_URL}"
+          envFrom:
+            - configMapRef:
+                name: edart-core-config
           resources:
             requests:
               memory: "128Mi"
