@@ -9,7 +9,7 @@ pipeline {
         KUBECONFIG_ID = 're-k3s'
         REGISTRY_ID = 'REGISTRYCRED'
         // Ensure this matches the ID you created in Jenkins
-        TELE_CRED_ID = 'TELE_BOT_TOKEN' 
+        TELE_CRED_ID = 'TELEBOT' 
     }
 
     stages {
