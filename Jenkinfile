@@ -13,6 +13,12 @@ pipeline {
     }
 
     stages {
+        stage('Checkout') {
+                    steps {
+                        // This pulls the code from the repo linked to this job
+                        checkout scm
+                    }
+        }
         stage('Build & Push') {
             steps {
                 withCredentials([usernamePassword(credentialsId: REGISTRY_ID, 
