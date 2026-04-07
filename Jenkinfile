@@ -14,10 +14,14 @@ pipeline {
 
     stages {
         stage('Checkout') {
-                    steps {
-                        // This pulls the code from the repo linked to this job
-                        checkout scm
-                    }
+            steps {
+                script {
+                    // Clean the workspace manually first
+                    deleteDir() 
+                    // Manually clone using the URL you have
+                    sh "git clone https://github.com/vysedh2000/edart-core.git ."
+                }
+            }
         }
         stage('Build & Push') {
             steps {
