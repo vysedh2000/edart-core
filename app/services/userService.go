@@ -32,6 +32,9 @@ func (a *UserService) CreateUserService(request *dtos.CreateUserRequest) (*model
 	userInfo.Fullname = request.Fullname
 	userInfo.Country = request.Country
 	userInfo.Dob = udob
+	userInfo.IdNum = request.IdNum
+	userInfo.IdType = request.IdType
+	userInfo.Nationality = request.Nationality
 	userInfo.CreateAt = time.Now()
 
 	if err := a.repo.CreateUser(userInfo); err != nil {
