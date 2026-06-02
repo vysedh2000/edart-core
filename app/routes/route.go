@@ -8,6 +8,7 @@ import (
 func Router(router *gin.Engine) {
 	userController := controllers.NewUserController()
 	accController := controllers.NewAccController()
+	txnController := controllers.NewTxnController()
 
 	router.Use(gin.Recovery())
 
@@ -26,5 +27,9 @@ func Router(router *gin.Engine) {
 		core.POST("/user/create", userController.CreateNewUser)
 
 		core.POST("/acc/create", accController.CreateNewAccount)
+
+		core.POST("/txn/fundTxn", txnController.FundTxnTransfer)
+
+		core.GET("/cob", txnController.CobHandler)
 	}
 }

@@ -33,7 +33,9 @@ func testQuery() {
 
 	result := DB.Find(&rows)
 	// DB.AutoMigrate(
-	// 	&models.UserInfo{},
+	// 	&models.TxnSuccess{},
+		// &models.DailyLedger{},
+		// &models.AssetListing{},
 		// &models.AccountBalance{},
 	// 	&models.UserInfo{},
 	// 	&models.BalanceLedger{},

@@ -37,7 +37,9 @@ func (c *AccountController) AccSummary(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(200, accDetail)
+	ctx.JSON(200, gin.H{
+		"assetList": accDetail,
+	})
 }
 
 func (c*AccountController) CreateNewAccount(ctx*gin.Context) {
