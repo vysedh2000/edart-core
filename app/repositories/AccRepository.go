@@ -1,6 +1,7 @@
 package repositories
 
 import (
+	"edart-core/app/dtos"
 	"edart-core/app/models"
 	"edart-core/database"
 
@@ -29,4 +30,32 @@ func (r*AccRepository) Inquiry(accNo string) (*models.AccountBalance, error) {
 	}
 
 	return &accSummary, nil
+}
+
+func (r*AccRepository) AllAccInquiry(userId string) ([]dtos.AccInq, error) {
+	var accSum []dtos.AccInq
+
+	query := `SELECT "accNo", "workingBal", asset, category
+			FROM public."AccountBalance" where uid = ?;`
+
+	err := r.DB.Raw(query, userId).Scan(&accSum).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return accSum, nil	
+}
+
+func (r*AccRepository) CobGetAccList() ([]dtos.CobAccDto, error) {
+	var accList []dtos.CobAccDto
+
+	query := `SELECT "accNo", "workingBal", "closingDate"
+			FROM public."AccountBalance";`
+			
+	err := r.DB.Raw(query).Scan(&accList).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return accList, nil
 }

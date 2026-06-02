@@ -10,7 +10,8 @@ type TxnSuccess struct {
 	AccId string `gorm:"column:accId"`
 	TxnType string `gorm:"column:txnType"`
 	TxnCode string `gorm:"column:txnCode"`
-	Amount string `gorm:"column:amount"`
+	Amount float64 `gorm:"column:amount"`
+	Asset string `gorm:"column:asset"`
 	Narative string `gorm:"column:narative"`
 	TxnDate time.Time `gorm:"column:txnDate"`
 	UserId string `gorm:"column:userId"`
