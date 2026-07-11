@@ -59,3 +59,16 @@ func (r*AccRepository) CobGetAccList() ([]dtos.CobAccDto, error) {
 
 	return accList, nil
 }
+
+func (r *AccRepository) CobUpdateBal(accNo string, amt float64) (string, error) {
+	query := `SELECT cobbalance(?, ?);`
+	var status string
+
+	// Use Raw and Scan to pull the result into the status variable
+	err := r.DB.Raw(query, accNo, amt).Scan(&status).Error
+	if err != nil {
+		return "", err
+	}
+
+	return status, nil
+}

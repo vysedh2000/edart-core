@@ -38,7 +38,7 @@ func testQuery() {
 		// &models.AssetListing{},
 		// &models.AccountBalance{},
 	// 	&models.UserInfo{},
-	// 	&models.BalanceLedger{},
+		// &models.BalanceLedger{},
 	// 	&models.TestTable{},
 	// )
 

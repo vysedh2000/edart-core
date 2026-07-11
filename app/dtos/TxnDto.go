@@ -2,6 +2,7 @@ package dtos
 
 type FundTxnRequest struct {
 	Asset string `json:"asset"`
+	BatchId string `json:"batchId"`
 	DebitAcc string `json:"debitAcc"`
 	CreditAcc string `json:"creditAcc"`
 	TxnCode string `json:"txnCode"`

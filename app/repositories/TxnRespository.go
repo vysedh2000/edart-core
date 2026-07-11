@@ -42,3 +42,22 @@ func (r *TxnRepository) GetNextTxnId() (string, error) {
 
 	return txnId, nil
 }
+
+func (r *TxnRepository) GetBalByAcc(accNo string) (float64, error) {
+	var totalAmt float64
+
+	now := time.Now()
+	today := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location())
+	tmr := today.AddDate(0, 0, 1)
+	
+	query := `
+		SELECT COALESCE(SUM(amount), 0) as total_amount 
+		FROM public."TxnSuccess"
+		WHERE "accId" = ? AND "txnDate" >= ? AND "txnDate" < ?
+	`
+	err := r.DB.Raw(query, accNo, today, tmr).Scan(&totalAmt).Error
+	if err != nil {
+		return 0, err
+	}
+	return totalAmt, nil
+}

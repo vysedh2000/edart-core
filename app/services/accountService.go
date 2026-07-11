@@ -4,18 +4,19 @@ import (
 	"edart-core/app/dtos"
 	"edart-core/app/models"
 	"edart-core/app/repositories"
+	"fmt"
 	"time"
 )
 
 type AccountService struct{
 	repo *repositories.AccRepository
-	dailyBalRepo * repositories.DailyLedgerRepository
+	txnRepo * repositories.TxnRepository
 	assetRepo * repositories.AssetRepository
 }
 
 func NewAccountService() *AccountService{
 	return &AccountService{repo: repositories.NewAccountRepo(),
-		dailyBalRepo: repositories.NewDailyBalRepository(),
+		txnRepo: repositories.NewTxnRepo(),
 		assetRepo: repositories.NewAssetRepo(),
 	}
 }
@@ -26,10 +27,14 @@ func (a*AccountService) AccSummaryService(accNo string) (any, error) {
 		return nil, err
 	}
 
+	fmt.Print("AccList",accList)
+
 	for i := range accList {
     acc := &accList[i] // Grab a pointer reference to the actual slice slot
 
-    ledgerSum, err := a.dailyBalRepo.SumBalByAcc(acc.AccNo)
+	fmt.Print("AccNo", acc.AccNo)
+    ledgerSum, err := a.txnRepo.GetBalByAcc(acc.AccNo)
+	fmt.Print("AccBal", i,ledgerSum)
     if err != nil {
         return nil, err
     }
