@@ -1,13 +1,17 @@
 package services
 
 import (
+	"context"
 	"edart-core/app/dtos"
 	"edart-core/app/models"
 	"edart-core/app/repositories"
+	"edart-core/database"
 	"errors"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/go-redis/redis"
 )
 
 type TxnService struct{
@@ -21,6 +25,30 @@ func NewTxnService() * TxnService{
 }
 
 func (t*TxnService) FundTxnTransfer(request *dtos.FundTxnRequest) (string, error){
+
+	ctx := context.Background()
+	val, err := database.Rdb.Get(ctx, request.DebitAcc).Result()
+
+	if val == request.DebitAcc {
+		for i := 0; i < 5; i++ {
+		val, err := database.Rdb.Get(ctx, request.DebitAcc).Result()
+		if err == redis.Nil {
+			break
+		}
+		if err != nil {
+			return "", err
+		}
+		if val != "" {
+			if i == 4 {
+				return "", errors.New("account is locked")
+			}
+			time.Sleep(500 * time.Millisecond)
+		}
+	}
+	} 
+
+	//before start txn lock first
+	database.Rdb.Set(ctx, request.DebitAcc, request.DebitAcc, 50)
 
 	credExists, err := t.othSer.FindAccService(request.CreditAcc)
 	if !credExists {
@@ -69,6 +97,9 @@ func (t*TxnService) FundTxnTransfer(request *dtos.FundTxnRequest) (string, error
 
 	//save to db
 	t.repo.CreateTxnBatch(txns)
+
+	//after txn done unlock account
+	database.Rdb.Del(ctx, request.DebitAcc)
 
 	return request.BatchId, nil
 }

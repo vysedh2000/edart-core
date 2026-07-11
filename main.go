@@ -12,6 +12,7 @@ func main() {
 	cobSvc := services.GetCobService()
 	defer cobSvc.Stop()
 	router := gin.Default()
+	database.InitRedis()
 	database.Connect()
 	routes.Router(router)
 	router.Run(":8090")

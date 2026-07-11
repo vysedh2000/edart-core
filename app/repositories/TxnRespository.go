@@ -46,7 +46,8 @@ func (r *TxnRepository) GetNextTxnId() (string, error) {
 func (r *TxnRepository) GetBalByAcc(accNo string) (float64, error) {
 	var totalAmt float64
 
-	today := time.Now().Truncate(24 * time.Hour)
+	now := time.Now()
+	today := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location())
 	tmr := today.AddDate(0, 0, 1)
 	
 	query := `

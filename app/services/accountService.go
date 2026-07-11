@@ -34,6 +34,7 @@ func (a*AccountService) AccSummaryService(accNo string) (any, error) {
 
 	fmt.Print("AccNo", acc.AccNo)
     ledgerSum, err := a.txnRepo.GetBalByAcc(acc.AccNo)
+	fmt.Print("AccBal", i,ledgerSum)
     if err != nil {
         return nil, err
     }
